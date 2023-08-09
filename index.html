@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>atwikiページ制作支援サイト</title>
+</head>
+<body>
+    <h1>atwikiページ制作支援</h1>
+    <p>
+        fvocadata向けに作られたサイトです
+    </p>
+    製作者ページ用
+    <p>
+        <label for="musician-name">製作者名：</label>
+        <input type="text" id="musician-name" name="name" size="30" />
+        <br>
+        <button id="musician">
+            生成
+        </button>
+    </p>
+    <br>
+    楽曲ページ用
+    <p>
+        <label for="music-name">楽曲名：</label>
+        <input type="text" id="musicname" name="name" size="30" />
+        <br>
+        <label for="song-author">製作者名：</label>
+        <input type="text" id="song-author" name="name" size="30" />
+        <br>
+        <button id="music">
+            生成
+        </button>
+    </p>
+    <script>
+        // 製作者名生成のイベントリスナー
+        document.getElementById("musician").addEventListener("click", function() {
+            var musicianName = document.getElementById("musician-name").value;
+            if (musicianName) {
+                // 製作者名が入力されている場合の処理
+                var age = Math.floor(Math.random() * 18) + 5;
+                var pagehtml = 
+`***[[${musicianName}]]
+#right(){&furigana()&furigana()【登録タグ:&tags() 】}
+        
+**Pについて
+-20${age}年から活動を開始。
+        
+***リンク
+-[[YouTube>>https://www.youtube.com/@${musicianName}fdata!!!]]
+        
+**参加した曲
+#list_by_tagsearch(${musicianName},sort=furigana2,errmsg=まだ曲が登録されていません。,and,100)
+        
+**コメント
+#comment()`;
+                // テキストエリアを作成して生成したページHTMLを表示
+                var textarea = document.createElement('textarea');
+                textarea.value = pagehtml;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                alert("製作者ページのテンプレートを生成しました！");
+            } else {
+                alert("製作者名を入力してください");
+            }
+        });
+        // 楽曲名生成のイベントリスナー
+
+        document.getElementById("music").addEventListener("click", function() {
+            var music = document.getElementById("musicname").value;
+            var songAuthor = document.getElementById("song-author").value;
+            
+            if (music && songAuthor) {
+                // 楽曲名と製作者名が入力されている場合の処理
+                var pagehtml = 
+`#right(){&furigana(検索用ルビを入力)【検索用:&furigana()&space(2)登録タグ:&tags() 】}
+#region(close,目次)
+目次
+#contents()
+#endregion
+
+|&youtube(https://www.youtube.com/watch?v=uw38dj){300,300}|
+
+
+作詞：[[${songAuthor}]]
+作曲：[[${songAuthor}]]
+唄：[[初音ミク]]
+
+**曲紹介
+曲名：『&u(){${music}}』（&u(){ルビをここに入力}）
+
+**歌詞
+ここに歌詞をコピペ
+
+**こちらのページは 架空の曲のページとなっています。`;
+                // テキストエリアを作成して生成したページHTMLを表示
+                var textarea = document.createElement('textarea');
+                textarea.value = pagehtml;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                alert("楽曲ページのテンプレートを生成しました！");
+            } else {
+                alert("楽曲名と製作者名を入力してください");
+            }
+        });
+    </script>
+</body>
+</html>
